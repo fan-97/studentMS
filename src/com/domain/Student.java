@@ -2,6 +2,12 @@
 
 import java.util.Date;
 
+ /** 
+ * @ClassName: Student 
+ * @Description: TODO
+ * @author: moon
+ * @date: 2019年4月25日 下午8:53:47  
+ */
 public class Student {
 
 	private int sid;
@@ -11,18 +17,19 @@ public class Student {
 	private Date birthday;
 	private String hobby;
 	private String info;
+	private String grade;
 	
 	public Student() {
 	}
 	
-	public Student( String sname, String gender, String phone, Date birthday, String hobby, String info) {
-		super();
+	public Student( String sname, String gender, String phone, Date birthday, String hobby, String info,String grade) {
 		this.sname = sname;
 		this.gender = gender;
 		this.phone = phone;
 		this.birthday = birthday;
 		this.hobby = hobby;
 		this.info = info;
+		this.grade = grade;
 	}
 
 	public int getSid() {
@@ -67,8 +74,19 @@ public class Student {
 	public void setInfo(String info) {
 		this.info = info;
 	}
+	
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+
 	@Override
 	public String toString() {
-		return sid+"  "+sname;
+		return "Student [sid=" + sid + ", sname=" + sname + ", gender=" + gender + ", phone=" + phone + ", birthday="
+				+ birthday + ", hobby=" + hobby + ", info=" + info + ", grade=" + grade + "]";
 	}
+	
 }

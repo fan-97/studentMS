@@ -4,12 +4,4 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<h2>主界面</h2><br>
-	<a href="StudentListServlet">管理学生</a><br>
-	<a href="insert.jsp">添加学生</a><br>
-	<a href="login.jsp">安全退出</a><br>
-</body>
-</html>
+<jsp:forward page="StudentServlet?method=listStudent"></jsp:forward>

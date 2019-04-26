@@ -26,9 +26,9 @@ public class StudentDaoImpl implements StudentDao {
 	@Override
 	public void insert(Student student) throws SQLException {
 		QueryRunner runner = new QueryRunner(JDBCUtil.getDataSource());
-		String sql = "insert into stu values (null,?,?,?,?,?,?)";
+		String sql = "insert into stu values (null,?,?,?,?,?,?,?)";
 		Object[] params = { student.getSname(), student.getGender(), student.getPhone(), student.getBirthday(),
-				student.getHobby(), student.getInfo() };
+				student.getHobby(), student.getInfo(), student.getGrade() };
 		runner.update(sql, params);
 	}
 
@@ -48,10 +48,10 @@ public class StudentDaoImpl implements StudentDao {
 	@Override
 	public void updateStu(Student stu) {
 		QueryRunner runner = new QueryRunner(JDBCUtil.getDataSource());
-		String sql = "update stu set sname=?,gender=?,phone=?,birthday=?,hobby=?,info=? where sid=?";
+		String sql = "update stu set sname=?,gender=?,phone=?,birthday=?,hobby=?,info=? ,grade=? where sid=?";
 		try {
 			runner.update(sql, stu.getSname(), stu.getGender(), stu.getPhone(), stu.getBirthday(), stu.getHobby(),
-					stu.getInfo(), stu.getSid());
+					stu.getInfo(), stu.getGrade(), stu.getSid());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -85,7 +85,7 @@ public class StudentDaoImpl implements StudentDao {
 	}
 
 	@Override
-	public List<Student> VagueQuery(String sname, String gender) {
+	public List<Student> VagueQuery(String sname, String gender,int startIndex,int pageSize) {
 		List<Student> list = null;
 		QueryRunner runner = new QueryRunner(JDBCUtil.getDataSource());
 		String sql = "select * from stu where 1=1 ";
@@ -98,6 +98,7 @@ public class StudentDaoImpl implements StudentDao {
 		if (!MyUtils.isEmptyStr(gender)) {
 			sql += " and gender = '" + gender + "'";
 		}
+		sql += " limit "+startIndex+","+pageSize;
 		try {
 			list = runner.query(sql, new BeanListHandler<Student>(Student.class));
 		} catch (SQLException e) {
@@ -119,11 +120,30 @@ public class StudentDaoImpl implements StudentDao {
 		}
 		return size.intValue();
 	}
-	
+
 	@Override
-	public List<Student> getCurrentPageUser(int currentPage) {
+	public int getTotalSizeByCondition(String sname, String gender) {
 		QueryRunner runner = new QueryRunner(JDBCUtil.getDataSource());
-		String sql = "select * from stu limit " + (currentPage - 1) * pageSize + "," + pageSize;
+		String sql = "select count(*) from stu where 1=1";
+		if (sname != null && !sname.trim().equals("")) {
+			sql += " and sname like '%" + sname + "%'";
+		}
+		if (gender != null && !gender.trim().equals("")) {
+			sql += " and gender='" + gender + "'";
+		}
+		Long num = new Long("0");
+		try {
+			num = (Long) runner.query(sql, new ScalarHandler());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return num.intValue();
+	}
+
+	@Override
+	public List<Student> getCurrentPageUser(int currentPage,int startIndex,int pageSize) {
+		QueryRunner runner = new QueryRunner(JDBCUtil.getDataSource());
+		String sql = "select * from stu limit " + startIndex + "," + pageSize;
 		List<Student> list = null;
 		try {
 			list = runner.query(sql, new BeanListHandler<Student>(Student.class));

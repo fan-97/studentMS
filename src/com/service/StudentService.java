@@ -21,7 +21,7 @@ public interface StudentService {
 	 * @param gender
 	 * @return
 	 */
-	public PageBean<Student> VagueQuery(String sname,String gender,int currentPage);
+	public PageBean VagueQuery(String sname,String gender,int currentPage);
 	
 	/**
 	 * 根据用户id获取用户
@@ -61,5 +61,5 @@ public interface StudentService {
 	 * 获取当前页的数据
 	 * @param currentPage
 	 */
-	public PageBean<Student> getCurrentPageUser(int currentPage);
+	public PageBean getCurrentPageUser(int currentPage);
 }

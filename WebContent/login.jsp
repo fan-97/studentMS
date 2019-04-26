@@ -6,14 +6,53 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<style type="text/css">
+	h2 {
+		margin-left:90px;
+	}
+	.container{
+		margin-left:360px;
+	}
+</style>
 </head>
 <body>
-	<h1>登录界面</h1>
-	<form action="LoginServlet" method="post">
-		账号:<input type="text" name="username"> <br>
-		密码:<input type="password" name="password"> <br>
-			<input type="submit"   value="登录">
-	</form>
-	<font color = "red">${err}</font>
+	<div >
+		<div class="container">
+			<br> <br> <br> <br>
+			<div class="page-header">
+  				<h1>学生信息管理系统<small>登录界面</small></h1>
+			</div>
+			<br> <br> <br>
+			<form class="form-horizontal" action="StudentServlet?method=login" method="post">
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 control-label">账号：</label>
+					<div class="col-xs-3">
+						<input type="text" class="form-control" id="inputEmail3" placeholder="账号" name="username">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword3" class="col-sm-2 control-label">密码：</label>
+					<div class="col-xs-3">
+						<input type="password" class="form-control" id="inputPassword3" name="password"	placeholder="Password">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<div class="checkbox">
+							<label> <input type="checkbox" name="remberme"> 记住我
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-default">登录</button>
+					</div>
+				</div>
+			</form>
+			<font color="red">${err}</font>
+		</div>
+	</div>
 </body>
 </html>

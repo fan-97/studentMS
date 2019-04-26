@@ -10,7 +10,6 @@ import com.domain.Student;
 
 public interface StudentDao {
 	
-	int pageSize = 5;//每一页显示的数据条数
 	
 	/**
 	 * 查询所有学生信息
@@ -19,12 +18,14 @@ public interface StudentDao {
 	public List<Student> findAll() throws SQLException;
 	
 	/**
-	 * 根据姓名和性别模糊查询
+	 * 根据姓名和性别查询
 	 * @param sname
 	 * @param gender
+	 * @param startIndex  开始索引
+	 * @param pageSize  每一页的大小
 	 * @return
 	 */
-	public List<Student> VagueQuery(String sname,String gender);
+	public List<Student> VagueQuery(String sname,String gender,int startIndex,int pageSize);
 	
 	/**
 	 * 根据用户id获取用户
@@ -70,7 +71,15 @@ public interface StudentDao {
 	 * 获取当前页的学生
 	 * @param currentPage
 	 */
-	public List<Student> getCurrentPageUser(int currentPage);
+	public List<Student> getCurrentPageUser(int currentPage,int startIndex,int pageSize);
+
+	/**
+	 * 获取模糊查询下的总记录数
+	 * @param sname
+	 * @param gender
+	 * @return
+	 */
+	public int getTotalSizeByCondition(String sname, String gender);
 	
 	
 }

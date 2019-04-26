@@ -48,43 +48,46 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public PageBean<Student> VagueQuery(String sname, String gender,int currentPage) {
+	public PageBean VagueQuery(String sname, String gender,int currentPage) {
 		StudentDao dao = new StudentDaoImpl();
-		List<Student> list = dao.VagueQuery(sname, gender);
-		PageBean<Student> pageBean = new PageBean<>();
-		// 1.获取总的记录数
-		int totalSize = list.size();
-		pageBean.setTotalSize(totalSize);
-		// 2.获取总的页数
-		int totalPage = totalSize % StudentDao.pageSize == 0 ? totalSize / StudentDao.pageSize
-				: (totalSize / StudentDao.pageSize + 1);
-		pageBean.setTotalPage(totalPage);
-		// 3.获取当前页的学生集合
-		pageBean.setList(list.subList(currentPage-1, totalSize>=StudentDao.pageSize?StudentDao.pageSize:totalSize));
-		// 4.设置当前页
-		pageBean.setCurrentPage(currentPage);
-		// 5.每一页显示的数据条数
-		pageBean.setPageSize(StudentDao.pageSize);
+//		List<Student> totalSize = dao.VagueQuery(sname, gender);
+//		PageBean pageBean = new PageBean(currentPage, totalSize, 10);
+//		// 1.获取总的记录数
+//		int totalSize = list.size();
+//		pageBean.setTotalSize(totalSize);
+//		// 2.获取总的页数
+//		int totalPage = totalSize % StudentDao.pageSize == 0 ? totalSize / StudentDao.pageSize
+//				: (totalSize / StudentDao.pageSize + 1);
+//		pageBean.setTotalPage(totalPage);
+//		// 3.获取当前页的学生集合
+//		pageBean.setList(list.subList(currentPage-1, totalSize>=StudentDao.pageSize?StudentDao.pageSize:totalSize));
+//		// 4.设置当前页
+//		pageBean.setCurrentPage(currentPage);
+//		// 5.每一页显示的数据条数
+//		pageBean.setPageSize(StudentDao.pageSize);
+		
+		//1.获取当前条件下的总的记录数
+		int totalSize = dao.getTotalSizeByCondition(sname,gender);
+		//2.创建PageBean对象
+		PageBean pageBean = new PageBean(currentPage, totalSize, 6);
+		//3.设置集合属性
+		pageBean.setList(dao.VagueQuery(sname, gender,pageBean.getStartIndex(),pageBean.getPageSize()));
+		//4.设置url
+		pageBean.setUrl("StudentServlet?method=queryStudent");
 		return pageBean;
 	}
 
 	@Override
-	public PageBean<Student> getCurrentPageUser(int currentPage) {
-		PageBean<Student> pageBean = new PageBean<>();
+	public PageBean getCurrentPageUser(int currentPage) {
 		StudentDao dao = new StudentDaoImpl();
 		// 1.获取总的记录数
 		int totalSize = dao.getTotalSize();
-		pageBean.setTotalSize(totalSize);
-		// 2.获取总的页数
-		int totalPage = totalSize % StudentDao.pageSize == 0 ? totalSize / StudentDao.pageSize
-				: (totalSize / StudentDao.pageSize + 1);
-		pageBean.setTotalPage(totalPage);
+		// 2.创建pageBean对象
+		PageBean pageBean = new PageBean(currentPage,totalSize,6);
 		// 3.获取当前页的学生集合
-		pageBean.setList(dao.getCurrentPageUser(currentPage));
-		// 4.设置当前页
-		pageBean.setCurrentPage(currentPage);
-		// 5.每一页显示的数据条数
-		pageBean.setPageSize(StudentDao.pageSize);
+		pageBean.setList(dao.getCurrentPageUser(currentPage,pageBean.getStartIndex(),pageBean.getPageSize()));
+		// 4.设置url
+		pageBean.setUrl("StudentServlet?method=listStudent");
 		return pageBean;
 	}
 

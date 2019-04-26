@@ -6,15 +6,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="css/bootstrap.min.css">
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="index.jsp">返回主页</a><br><br>
-	<form method="post" action="InsertServlet?type=insert" accept-charset="UTF-8">
-		<table border="1">
+	<div class="page-header">
+  		<h1>学生信息管理系统<small>添加学生</small></h1>
+	</div>
+	<a href="StudentServlet?method=goHead" class="btn btn-default">返回主页</a><br><br>
+	<form method="post" action="StudentServlet?method=insertOne" accept-charset="UTF-8">
+		<table class="table table-hover">
 			<tr>
 				<td>姓名</td>
-				<td><input type="text" name="sname""></td>
+				<td><input type="text" name="sname"></td>
+			</tr>
+			<tr>
+				<td>班级</td>
+				<td><input type="text" name="grade" ></td>
 			</tr>
 			<tr>
 				<td>性别</td>
@@ -28,7 +36,7 @@
 			</tr>
 			<tr>
 				<td>生日</td>
-				<td><input type="text" name="birthday" placeholder="yyyy-MM-dd"/></td>
+				<td><input type="date" name="birthday" /></td>
 			</tr>
 			<tr>
 				<td>爱好</td>
@@ -45,7 +53,7 @@
 				<td><textarea name="info" rows="5" cols="25"></textarea></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="添加" /></td>
+				<td colspan="2"><input type="submit" value="添加" class="btn btn-default"/></td>
 			</tr>
 		</table>
 	</form>

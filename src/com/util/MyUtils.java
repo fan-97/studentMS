@@ -12,7 +12,7 @@ public class MyUtils {
 		if (str == null) {
 			return true;
 		}
-		if (str.matches(" +")) {
+		if (str.trim().equals("")) {
 			return true;
 		}
 		if ("null".equals(str)) {
