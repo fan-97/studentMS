@@ -24,6 +24,12 @@ public class StudentFilter implements Filter {
 		HttpServletResponse resp = (HttpServletResponse) response;
 		req.setCharacterEncoding("utf8");
 		resp.setContentType("text/html;charset=utf8");
+
+		// 获取请求界面的路径 获取请求的url
+		String a = req.getRequestURI();
+//		if (a.contains(".css") || a.contains(".js") || a.contains(".png") || a.contains(".jpg")) {
+//			chain.doFilter(request, response);
+//		}
 		// 如果是登录界面不用拦截
 		String servletPath = req.getServletPath();
 		if (servletPath.startsWith("/StudentServlet")) {
@@ -41,9 +47,9 @@ public class StudentFilter implements Filter {
 		AdminDao dao = new AdminDaoImpl();
 		String session = (String) req.getSession().getAttribute("user");
 		if (session == null) {
-			//没有登录
+			// 没有登录
 			req.getRequestDispatcher("err.jsp").forward(req, resp);
-			return ;
+			return;
 		}
 
 		// 从cookie里面找用户登录信息
@@ -57,11 +63,11 @@ public class StudentFilter implements Filter {
 		String username = value[0];
 		String password = value[1];
 		if (!dao.login(username, password)) {
-			//登录失败
+			// 登录失败
 			chain.doFilter(req, resp);
 			return;
 		}
-		//将信息存入session
+		// 将信息存入session
 		req.getSession().setAttribute("user", username);
 		req.getRequestDispatcher("err.jsp").forward(req, resp);
 	}

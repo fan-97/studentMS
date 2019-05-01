@@ -5,8 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<script src="js/jquery-1.11.3.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css"
+type="text/css" >
+<script src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -65,14 +66,35 @@
 				第${ pageBean.currentPage} /${pageBean.totalPage} &nbsp;&nbsp;
 				每页显示${ pageBean.pageSize }条&nbsp;&nbsp;
 				总记录数&nbsp;${pageBean.totalSize }
-				<c:if test="${ pageBean.currentPage!=1}">
-					<a href="${pageContext.request.contextPath}/${pageBean.url}&currentPage=1">首页</a>&nbsp;
-					<a href="${pageContext.request.contextPath}/${pageBean.url}&currentPage=${pageBean.prePage}">上一页</a>
-				</c:if>
-				<c:if test="${ pageBean.currentPage!=pageBean.totalPage}">
-					<a href="${pageContext.request.contextPath}/${pageBean.url}&currentPage=${pageBean.nextPage}">下一页</a>
-					<a href="${pageContext.request.contextPath}/${pageBean.url}&currentPage=${pageBean.totalPage}">尾页</a>&nbsp;
-				</c:if>
+				<nav aria-label="Page navigation">
+				  <ul class="pagination">
+				    <c:if test="${ pageBean.currentPage!=1}">
+				    <li>
+				    	<a href="${pageContext.request.contextPath}/${pageBean.url}&currentPage=1" class="btn btn-default">首页
+				    	</a>
+				    </li>
+				    <li>
+				      <a href="${pageContext.request.contextPath}/${pageBean.url}&currentPage=${pageBean.prePage}" aria-label="Previous">
+				      	 <span aria-hidden="true">&laquo;</span>
+				      </a>
+				    </li>
+			        </c:if>
+			        <!-- 显示页码 -->
+					<c:forEach begin="${pageBean.startPage}" end="${pageBean.endPage }" var="num">
+						<li><a href="${pageContext.request.contextPath}/${pageBean.url}&currentPage=${num}">${num}</a></li>
+					</c:forEach>
+					<c:if test="${ pageBean.currentPage!=pageBean.totalPage}">
+					<li>
+						<a href="${pageContext.request.contextPath}/${pageBean.url}&currentPage=${pageBean.nextPage}" aria-label="Next" >
+							 <span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+					<li>
+						<a href="${pageContext.request.contextPath}/${pageBean.url}&currentPage=${pageBean.totalPage}" class="btn btn-default">尾页</a>
+					</li>
+					</c:if>
+				  </ul>
+				</nav>
 			</td>
 		</tr>
 	</table>
